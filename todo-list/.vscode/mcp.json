@@ -9,7 +9,7 @@
   "servers": {
     "mcp-todo-list-aca-local": {
       "type": "sse",
-      "url": "http://0.0.0.0:5242/sse"
+      "url": "http://127.0.0.1:5242/sse"
     },
     "mcp-todo-list-aca-container": {
       "type": "sse",
