@@ -48,6 +48,12 @@
 
   "remoteUser": "vscode",
 
+  "mounts": [],
+
+  "containerEnv": {
+    "DEBIAN_FRONTEND": "noninteractive"
+  },
+
   "onCreateCommand": "./.devcontainer/on-create.sh > ~/on-create.log",
 
   "hostRequirements": {

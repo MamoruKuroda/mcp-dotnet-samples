@@ -1,37 +1,37 @@
-# MCP Server: Markdown to HTML
+# MCPサーバー: Markdown to HTML
 
-This is an MCP server that converts markdown text to HTML.
+これは、MarkdownテキストをHTMLに変換するMCPサーバーです。
 
-## Prerequisites
+## 前提条件
 
 - [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
-- [Visual Studio Code](https://code.visualstudio.com/) with
-  - [C# Dev Kit](https://marketplace.visualstudio.com/items/?itemName=ms-dotnettools.csdevkit) extension
+- [Visual Studio Code](https://code.visualstudio.com/) と以下の拡張機能
+  - [C# Dev Kit](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit) 拡張機能
 - [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli)
 - [Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd)
 - [Docker Desktop](https://docs.docker.com/get-started/get-docker/)
 
-## Getting Started
+## はじめに
 
-- [Build ASP.NET Core MCP server (STDIO) locally in a container](#build-aspnet-core-mcp-server-stdio-locally-in-a-container)
-- [Run ASP.NET Core MCP server (SSE) locally](#run-aspnet-core-mcp-server-sse-locally)
-- [Run ASP.NET Core MCP server (SSE) locally in a container](#run-aspnet-core-mcp-server-sse-locally-in-a-container)
-- [Run ASP.NET Core MCP server (SSE) remotely](#run-aspnet-core-mcp-server-sse-remotely)
-- [Connect MCP server to an MCP host/client](#connect-mcp-server-to-an-mcp-hostclient)
-  - [VS Code + Agent Mode + Local MCP server (STDIO)](#vs-code--agent-mode--local-mcp-server-stdio)
-  - [VS Code + Agent Mode + Local MCP server (STDIO) in a container](#vs-code--agent-mode--local-mcp-server-stdio-in-a-container)
-  - [VS Code + Agent Mode + Local MCP server (SSE)](#vs-code--agent-mode--local-mcp-server-sse)
-  - [VS Code + Agent Mode + Local MCP server (SSE) in a container](#vs-code--agent-mode--local-mcp-server-sse-in-a-container)
-  - [VS Code + Agent Mode + Remote MCP server (SSE)](#vs-code--agent-mode--remote-mcp-server-sse)
-  - [MCP Inspector + Local MCP server (STDIO)](#mcp-inspector--local-mcp-server-stdio)
-  - [MCP Inspector + Local MCP server (STDIO) in a container](#mcp-inspector--local-mcp-server-stdio-in-a-container)
-  - [MCP Inspector + Local MCP server (SSE)](#mcp-inspector--local-mcp-server-sse)
-  - [MCP Inspector + Local MCP server (SSE) in a container](#mcp-inspector--local-mcp-server-sse-in-a-container)
-  - [MCP Inspector + Remote MCP server (SSE)](#mcp-inspector--remote-mcp-server-sse)
+- [ASP.NET Core MCPサーバー（STDIO）をローカルでコンテナにビルド](#aspnet-core-mcpサーバーstdioをローカルでコンテナにビルド)
+- [ASP.NET Core MCPサーバー（SSE）をローカルで実行](#aspnet-core-mcpサーバーsseをローカルで実行)
+- [ASP.NET Core MCPサーバー（SSE）をローカルのコンテナで実行](#aspnet-core-mcpサーバーsseをローカルのコンテナで実行)
+- [ASP.NET Core MCPサーバー（SSE）をリモートで実行](#aspnet-core-mcpサーバーsseをリモートで実行)
+- [MCPサーバーをMCPホスト/クライアントに接続](#mcpサーバーをmcpホストクライアントに接続)
+  - [VS Code + Agent Mode + ローカルMCPサーバー（STDIO）](#vs-code--agent-mode--ローカルmcpサーバーstdio)
+  - [VS Code + Agent Mode + ローカルMCPサーバー（STDIO）コンテナ](#vs-code--agent-mode--ローカルmcpサーバーstdioコンテナ)
+  - [VS Code + Agent Mode + ローカルMCPサーバー（SSE）](#vs-code--agent-mode--ローカルmcpサーバーsse)
+  - [VS Code + Agent Mode + ローカルMCPサーバー（SSE）コンテナ](#vs-code--agent-mode--ローカルmcpサーバーsseコンテナ)
+  - [VS Code + Agent Mode + リモートMCPサーバー（SSE）](#vs-code--agent-mode--リモートmcpサーバーsse)
+  - [MCP Inspector + ローカルMCPサーバー（STDIO）](#mcp-inspector--ローカルmcpサーバーstdio)
+  - [MCP Inspector + ローカルMCPサーバー（STDIO）コンテナ](#mcp-inspector--ローカルmcpサーバーstdioコンテナ)
+  - [MCP Inspector + ローカルMCPサーバー（SSE）](#mcp-inspector--ローカルmcpサーバーsse)
+  - [MCP Inspector + ローカルMCPサーバー（SSE）コンテナ](#mcp-inspector--ローカルmcpサーバーsseコンテナ)
+  - [MCP Inspector + リモートMCPサーバー（SSE）](#mcp-inspector--リモートmcpサーバーsse)
 
-### Build ASP.NET Core MCP server (STDIO) locally in a container
+### ASP.NET Core MCPサーバー（STDIO）をローカルでコンテナにビルド
 
-1. Get the repository root.
+1. リポジトリのルートを取得します。
 
     ```bash
     # bash/zsh
@@ -43,16 +43,16 @@ This is an MCP server that converts markdown text to HTML.
     $REPOSITORY_ROOT = git rev-parse --show-toplevel
     ```
 
-1. Build the MCP server app as a container image.
+2. MCPサーバーアプリをコンテナイメージとしてビルドします。
 
     ```bash
     cd $REPOSITORY_ROOT/markdown-to-html
     docker build -f Dockerfile.stdio -t mcp-md2html-stdio:latest .
     ```
 
-### Run ASP.NET Core MCP server (SSE) locally
+### ASP.NET Core MCPサーバー（SSE）をローカルで実行
 
-1. Get the repository root.
+1. リポジトリのルートを取得します。
 
     ```bash
     # bash/zsh
@@ -64,28 +64,28 @@ This is an MCP server that converts markdown text to HTML.
     $REPOSITORY_ROOT = git rev-parse --show-toplevel
     ```
 
-1. Run the MCP server app.
+2. MCPサーバーアプリを実行します。
 
     ```bash
     cd $REPOSITORY_ROOT/markdown-to-html
     dotnet run --project ./src/McpMarkdownToHtml.ContainerApp
     ```
 
-   > **NOTE**: If you're converting the markdown text for [Microsoft Tech Community](https://techcommunity.microsoft.com/), the following parameters are helpful to pass.
+   > **注意**: [Microsoft Tech Community](https://techcommunity.microsoft.com/)向けにMarkdownテキストを変換する場合、以下のパラメータが役立ちます。
    >
-   > - `--tech-community`/`-tc`: The switch that indicates to convert the markdown text to HTML specific to Microsoft Tech Community.
-   > - `--extra-paragraph`/`-p`: The switch that indicates whether to put extra paragraph between the given HTML elements that is defined by the `--tags` argument.
-   > - `--tags`: The comma delimited list of HTML tags that adds extra paragraph in between. Default value is `p,blockquote,h1,h2,h3,h4,h5,h6,ol,ul,dl`
+   > - `--tech-community`/`-tc`: Microsoft Tech Community向けにMarkdownテキストをHTMLに変換することを示すスイッチ。
+   > - `--extra-paragraph`/`-p`: `--tags`引数で定義されたHTML要素間に段落を追加するかどうかを示すスイッチ。
+   > - `--tags`: 段落を追加するHTMLタグのコンマ区切りリスト。デフォルト値は `p,blockquote,h1,h2,h3,h4,h5,h6,ol,ul,dl`
    >
-   > With these parameters, you can run the MCP server like:
+   > これらのパラメータを使用して、以下のようにMCPサーバーを実行できます：
    >
    > ```bash
    > dotnet run --project ./src/McpMarkdownToHtml.ContainerApp -- -tc -p --tags "p,h1,h2,h3,ol,ul,dl"
    > ```
 
-### Run ASP.NET Core MCP server (SSE) locally in a container
+### ASP.NET Core MCPサーバー（SSE）をローカルのコンテナで実行
 
-1. Get the repository root.
+1. リポジトリのルートを取得します。
 
     ```bash
     # bash/zsh
@@ -97,49 +97,49 @@ This is an MCP server that converts markdown text to HTML.
     $REPOSITORY_ROOT = git rev-parse --show-toplevel
     ```
 
-1. Build the MCP server app as a container image.
+2. MCPサーバーアプリをコンテナイメージとしてビルドします。
 
     ```bash
     cd $REPOSITORY_ROOT/markdown-to-html
     docker build -f Dockerfile.sse -t mcp-md2html-sse:latest .
     ```
 
-1. Run the MCP server app in a container
+3. MCPサーバーアプリをコンテナで実行します。
 
     ```bash
     docker run -d -p 8080:8080 --name mcp-md2html-sse mcp-md2html-sse:latest
     ```
 
-   > **NOTE**: If you're converting the markdown text for [Microsoft Tech Community](https://techcommunity.microsoft.com/), the following parameters are helpful to pass.
+   > **注意**: [Microsoft Tech Community](https://techcommunity.microsoft.com/)向けにMarkdownテキストを変換する場合、以下のパラメータが役立ちます。
    >
-   > - `--tech-community`/`-tc`: The switch that indicates to convert the markdown text to HTML specific to Microsoft Tech Community.
-   > - `--extra-paragraph`/`-p`: The switch that indicates whether to put extra paragraph between the given HTML elements that is defined by the `--tags` argument.
-   > - `--tags`: The comma delimited list of HTML tags that adds extra paragraph in between. Default value is `p,blockquote,h1,h2,h3,h4,h5,h6,ol,ul,dl`
+   > - `--tech-community`/`-tc`: Microsoft Tech Community向けにMarkdownテキストをHTMLに変換することを示すスイッチ。
+   > - `--extra-paragraph`/`-p`: `--tags`引数で定義されたHTML要素間に段落を追加するかどうかを示すスイッチ。
+   > - `--tags`: 段落を追加するHTMLタグのコンマ区切りリスト。デフォルト値は `p,blockquote,h1,h2,h3,h4,h5,h6,ol,ul,dl`
    >
-   > With these parameters, you can run the MCP server like:
+   > これらのパラメータを使用して、以下のようにMCPサーバーを実行できます：
    >
    > ```bash
    > docker run -d -p 8080:8080 --name mcp-md2html-sse mcp-md2html-sse:latest -tc -p --tags "p,h1,h2,h3,ol,ul,dl"
    > ```
 
-### Run ASP.NET Core MCP server (SSE) remotely
+### ASP.NET Core MCPサーバー（SSE）をリモートで実行
 
-1. Login to Azure
+1. Azureにログインします。
 
     ```bash
-    # Login with Azure Developer CLI
+    # Azure Developer CLIでログイン
     azd auth login
     ```
 
-1. Deploy the MCP server app to Azure
+2. MCPサーバーアプリをAzureにデプロイします。
 
     ```bash
     azd up
     ```
 
-   While provisioning and deploying, you'll be asked to provide subscription ID, location, environment name.
+   プロビジョニングとデプロイの際に、サブスクリプションID、場所、環境名の入力が求められます。
 
-1. After the deployment is complete, get the information by running the following commands:
+3. デプロイが完了したら、以下のコマンドを実行して情報を取得します：
 
    - Azure Container Apps FQDN:
 
@@ -147,11 +147,11 @@ This is an MCP server that converts markdown text to HTML.
      azd env get-value AZURE_RESOURCE_MCP_MD2HTML_FQDN
      ```
 
-### Connect MCP server to an MCP host/client
+### MCPサーバーをMCPホスト/クライアントに接続
 
-#### VS Code + Agent Mode + Local MCP server (STDIO)
+#### VS Code + Agent Mode + ローカルMCPサーバー（STDIO）
 
-1. Get the repository root.
+1. リポジトリのルートを取得します。
 
     ```bash
     # bash/zsh
@@ -163,7 +163,7 @@ This is an MCP server that converts markdown text to HTML.
     $REPOSITORY_ROOT = git rev-parse --show-toplevel
     ```
 
-1. Copy `mcp.json` to the repository root.
+2. `mcp.json`をリポジトリのルートにコピーします。
 
     ```bash
     mkdir -p $REPOSITORY_ROOT/.vscode
@@ -177,20 +177,20 @@ This is an MCP server that converts markdown text to HTML.
               -Destination $REPOSITORY_ROOT/.vscode/mcp.json -Force
     ```
 
-1. Open Command Palette by typing `F1` or `Ctrl`+`Shift`+`P` on Windows or `Cmd`+`Shift`+`P` on Mac OS, and search `MCP: List Servers`.
-1. Choose `mcp-md2html-stdio-local` then click `Start Server`.
-1. When prompted, enter the absolute directory of the `McpMarkdownToHtml.ConsoleApp` project.
-1. Enter prompt like:
+3. `F1`キーまたはWindowsでは`Ctrl`+`Shift`+`P`、Mac OSでは`Cmd`+`Shift`+`P`でコマンドパレットを開き、`MCP: List Servers`を検索します。
+4. `mcp-md2html-stdio-local`を選択し、`Start Server`をクリックします。
+5. プロンプトが表示されたら、`McpMarkdownToHtml.ConsoleApp`プロジェクトの絶対ディレクトリを入力します。
+6. 以下のようなプロンプトを入力します：
 
     ```text
-    Convert the highlighted markdown text to HTML and save it to converted.html
+    ハイライトされたMarkdownテキストをHTMLに変換し、converted.htmlに保存してください
     ```
 
-1. Confirm the result.
+7. 結果を確認します。
 
-#### VS Code + Agent Mode + Local MCP server (STDIO) in a container
+#### VS Code + Agent Mode + ローカルMCPサーバー（STDIO）コンテナ
 
-1. Get the repository root.
+1. リポジトリのルートを取得します。
 
     ```bash
     # bash/zsh
@@ -202,7 +202,7 @@ This is an MCP server that converts markdown text to HTML.
     $REPOSITORY_ROOT = git rev-parse --show-toplevel
     ```
 
-1. Copy `mcp.json` to the repository root.
+2. `mcp.json`をリポジトリのルートにコピーします。
 
     ```bash
     mkdir -p $REPOSITORY_ROOT/.vscode
@@ -216,19 +216,19 @@ This is an MCP server that converts markdown text to HTML.
               -Destination $REPOSITORY_ROOT/.vscode/mcp.json -Force
     ```
 
-1. Open Command Palette by typing `F1` or `Ctrl`+`Shift`+`P` on Windows or `Cmd`+`Shift`+`P` on Mac OS, and search `MCP: List Servers`.
-1. Choose `mcp-md2html-stdio-container` then click `Start Server`.
-1. Enter prompt like:
+3. `F1`キーまたはWindowsでは`Ctrl`+`Shift`+`P`、Mac OSでは`Cmd`+`Shift`+`P`でコマンドパレットを開き、`MCP: List Servers`を検索します。
+4. `mcp-md2html-stdio-container`を選択し、`Start Server`をクリックします。
+5. 以下のようなプロンプトを入力します：
 
     ```text
-    Convert the highlighted markdown text to HTML and save it to converted.html
+    ハイライトされたMarkdownテキストをHTMLに変換し、converted.htmlに保存してください
     ```
 
-1. Confirm the result.
+6. 結果を確認します。
 
-#### VS Code + Agent Mode + Local MCP server (SSE)
+#### VS Code + Agent Mode + ローカルMCPサーバー（SSE）
 
-1. Get the repository root.
+1. リポジトリのルートを取得します。
 
     ```bash
     # bash/zsh
@@ -240,7 +240,7 @@ This is an MCP server that converts markdown text to HTML.
     $REPOSITORY_ROOT = git rev-parse --show-toplevel
     ```
 
-1. Copy `mcp.json` to the repository root.
+2. `mcp.json`をリポジトリのルートにコピーします。
 
     ```bash
     mkdir -p $REPOSITORY_ROOT/.vscode
@@ -254,19 +254,19 @@ This is an MCP server that converts markdown text to HTML.
               -Destination $REPOSITORY_ROOT/.vscode/mcp.json -Force
     ```
 
-1. Open Command Palette by typing `F1` or `Ctrl`+`Shift`+`P` on Windows or `Cmd`+`Shift`+`P` on Mac OS, and search `MCP: List Servers`.
-1. Choose `mcp-md2html-sse-local` then click `Start Server`.
-1. Enter prompt like:
+3. `F1`キーまたはWindowsでは`Ctrl`+`Shift`+`P`、Mac OSでは`Cmd`+`Shift`+`P`でコマンドパレットを開き、`MCP: List Servers`を検索します。
+4. `mcp-md2html-sse-local`を選択し、`Start Server`をクリックします。
+5. 以下のようなプロンプトを入力します：
 
     ```text
-    Convert the highlighted markdown text to HTML and save it to converted.html
+    ハイライトされたMarkdownテキストをHTMLに変換し、converted.htmlに保存してください
     ```
 
-1. Confirm the result.
+6. 結果を確認します。
 
-#### VS Code + Agent Mode + Local MCP server (SSE) in a container
+#### VS Code + Agent Mode + ローカルMCPサーバー（SSE）コンテナ
 
-1. Get the repository root.
+1. リポジトリのルートを取得します。
 
     ```bash
     # bash/zsh
@@ -278,7 +278,7 @@ This is an MCP server that converts markdown text to HTML.
     $REPOSITORY_ROOT = git rev-parse --show-toplevel
     ```
 
-1. Copy `mcp.json` to the repository root.
+2. `mcp.json`をリポジトリのルートにコピーします。
 
     ```bash
     mkdir -p $REPOSITORY_ROOT/.vscode
@@ -292,19 +292,19 @@ This is an MCP server that converts markdown text to HTML.
               -Destination $REPOSITORY_ROOT/.vscode/mcp.json -Force
     ```
 
-1. Open Command Palette by typing `F1` or `Ctrl`+`Shift`+`P` on Windows or `Cmd`+`Shift`+`P` on Mac OS, and search `MCP: List Servers`.
-1. Choose `mcp-md2html-sse-container` then click `Start Server`.
-1. Enter prompt like:
+3. `F1`キーまたはWindowsでは`Ctrl`+`Shift`+`P`、Mac OSでは`Cmd`+`Shift`+`P`でコマンドパレットを開き、`MCP: List Servers`を検索します。
+4. `mcp-md2html-sse-container`を選択し、`Start Server`をクリックします。
+5. 以下のようなプロンプトを入力します：
 
     ```text
-    Convert the highlighted markdown text to HTML and save it to converted.html
+    ハイライトされたMarkdownテキストをHTMLに変換し、converted.htmlに保存してください
     ```
 
-1. Confirm the result.
+6. 結果を確認します。
 
-#### VS Code + Agent Mode + Remote MCP server (SSE)
+#### VS Code + Agent Mode + リモートMCPサーバー（SSE）
 
-1. Get the repository root.
+1. リポジトリのルートを取得します。
 
     ```bash
     # bash/zsh
@@ -316,7 +316,7 @@ This is an MCP server that converts markdown text to HTML.
     $REPOSITORY_ROOT = git rev-parse --show-toplevel
     ```
 
-1. Copy `mcp.json` to the repository root.
+2. `mcp.json`をリポジトリのルートにコピーします。
 
     ```bash
     mkdir -p $REPOSITORY_ROOT/.vscode
@@ -330,126 +330,126 @@ This is an MCP server that converts markdown text to HTML.
               -Destination $REPOSITORY_ROOT/.vscode/mcp.json -Force
     ```
 
-1. Open Command Palette by typing `F1` or `Ctrl`+`Shift`+`P` on Windows or `Cmd`+`Shift`+`P` on Mac OS, and search `MCP: List Servers`.
-1. Choose `mcp-md2html-sse-remote` then click `Start Server`.
-1. Enter the Azure Container Apps FQDN.
-1. Enter prompt like:
+3. `F1`キーまたはWindowsでは`Ctrl`+`Shift`+`P`、Mac OSでは`Cmd`+`Shift`+`P`でコマンドパレットを開き、`MCP: List Servers`を検索します。
+4. `mcp-md2html-sse-remote`を選択し、`Start Server`をクリックします。
+5. Azure Container Apps FQDNを入力します。
+6. 以下のようなプロンプトを入力します：
 
     ```text
-    Convert the highlighted markdown text to HTML and save it to converted.html
+    ハイライトされたMarkdownテキストをHTMLに変換し、converted.htmlに保存してください
     ```
 
-1. Confirm the result.
+7. 結果を確認します。
 
-#### MCP Inspector + Local MCP server (STDIO)
+#### MCP Inspector + ローカルMCPサーバー（STDIO）
 
-1. Run MCP Inspector.
+1. MCP Inspectorを実行します。
 
     ```bash
     npx @modelcontextprotocol/inspector node build/index.js
     ```
 
-1. Open a web browser and navigate to the MCP Inspector web app from the URL displayed by the app (e.g. http://localhost:6274)
-1. Set the transport type to `STDIO`
-1. Set the command to `dotnet`
-1. Set the arguments that pointing to the console app project and **Connect**:
+2. Webブラウザを開いて、アプリで表示されるURL（例：http://localhost:6274）からMCP Inspector Webアプリにアクセスします。
+3. トランスポートタイプを`STDIO`に設定します。
+4. コマンドを`dotnet`に設定します。
+5. コンソールアプリプロジェクトを指す引数を設定し、**Connect**をクリックします：
 
     ```text
     run --project {{absolute/path/to/markdown-to-html}}/src/McpMarkdownToHtml.ConsoleApp
     ```
 
-   > **NOTE**:
+   > **注意**:
    >
-   > 1. If you're converting the markdown text for [Microsoft Tech Community](https://techcommunity.microsoft.com/), the following parameters are helpful to pass.
+   > 1. [Microsoft Tech Community](https://techcommunity.microsoft.com/)向けにMarkdownテキストを変換する場合、以下のパラメータが役立ちます。
    >
-   >    - `--tech-community`/`-tc`: The switch that indicates to convert the markdown text to HTML specific to Microsoft Tech Community.
-   >    - `--extra-paragraph`/`-p`: The switch that indicates whether to put extra paragraph between the given HTML elements that is defined by the `--tags` argument.
-   >    - `--tags`: The comma delimited list of HTML tags that adds extra paragraph in between. Default value is `p,blockquote,h1,h2,h3,h4,h5,h6,ol,ul,dl`
+   >    - `--tech-community`/`-tc`: Microsoft Tech Community向けにMarkdownテキストをHTMLに変換することを示すスイッチ。
+   >    - `--extra-paragraph`/`-p`: `--tags`引数で定義されたHTML要素間に段落を追加するかどうかを示すスイッチ。
+   >    - `--tags`: 段落を追加するHTMLタグのコンマ区切りリスト。デフォルト値は `p,blockquote,h1,h2,h3,h4,h5,h6,ol,ul,dl`
    >
-   >    With these parameters, the arguments value can be:
+   >    これらのパラメータを使用すると、引数の値は以下のようになります：
    >
    >     ```bash
    >     run --project {{absolute/path/to/markdown-to-html}}/src/McpMarkdownToHtml.ConsoleApp -- -tc -p --tags "p,h1,h2,h3,ol,ul,dl"
    >     ```
    >
-   > 1. The project path MUST be the absolute path.
+   > 2. プロジェクトパスは絶対パスでなければなりません。
 
-1. Click **List Tools**.
-1. Click on a tool and **Run Tool** with appropriate values.
+6. **List Tools**をクリックします。
+7. ツールをクリックして、適切な値で**Run Tool**を実行します。
 
-#### MCP Inspector + Local MCP server (STDIO) in a container
+#### MCP Inspector + ローカルMCPサーバー（STDIO）コンテナ
 
-1. Run MCP Inspector.
+1. MCP Inspectorを実行します。
 
     ```bash
     npx @modelcontextprotocol/inspector node build/index.js
     ```
 
-1. Open a web browser and navigate to the MCP Inspector web app from the URL displayed by the app (e.g. http://localhost:6274)
-1. Set the transport type to `STDIO`
-1. Set the command to `docker`
-1. Set the arguments that pointing to the console app project and **Connect**:
+2. Webブラウザを開いて、アプリで表示されるURL（例：http://localhost:6274）からMCP Inspector Webアプリにアクセスします。
+3. トランスポートタイプを`STDIO`に設定します。
+4. コマンドを`docker`に設定します。
+5. コンソールアプリプロジェクトを指す引数を設定し、**Connect**をクリックします：
 
     ```text
     run -i --rm mcp-md2html-stdio:latest
     ```
 
-1. Click **List Tools**.
-1. Click on a tool and **Run Tool** with appropriate values.
+6. **List Tools**をクリックします。
+7. ツールをクリックして、適切な値で**Run Tool**を実行します。
 
-#### MCP Inspector + Local MCP server (SSE)
+#### MCP Inspector + ローカルMCPサーバー（SSE）
 
-1. Run MCP Inspector.
+1. MCP Inspectorを実行します。
 
     ```bash
     npx @modelcontextprotocol/inspector node build/index.js
     ```
 
-1. Open a web browser and navigate to the MCP Inspector web app from the URL displayed by the app (e.g. http://localhost:6274)
-1. Set the transport type to `SSE` 
-1. Set the URL to your running Function app's SSE endpoint and **Connect**:
+2. Webブラウザを開いて、アプリで表示されるURL（例：http://localhost:6274）からMCP Inspector Webアプリにアクセスします。
+3. トランスポートタイプを`SSE`に設定します。
+4. 実行中のFunctionアプリのSSEエンドポイントのURLを設定し、**Connect**をクリックします：
 
     ```text
     http://0.0.0.0:5280/sse
     ```
 
-1. Click **List Tools**.
-1. Click on a tool and **Run Tool** with appropriate values.
+5. **List Tools**をクリックします。
+6. ツールをクリックして、適切な値で**Run Tool**を実行します。
 
-#### MCP Inspector + Local MCP server (SSE) in a container
+#### MCP Inspector + ローカルMCPサーバー（SSE）コンテナ
 
-1. Run MCP Inspector.
+1. MCP Inspectorを実行します。
 
     ```bash
     npx @modelcontextprotocol/inspector node build/index.js
     ```
 
-1. Open a web browser and navigate to the MCP Inspector web app from the URL displayed by the app (e.g. http://localhost:6274)
-1. Set the transport type to `SSE` 
-1. Set the URL to your running Function app's SSE endpoint and **Connect**:
+2. Webブラウザを開いて、アプリで表示されるURL（例：http://localhost:6274）からMCP Inspector Webアプリにアクセスします。
+3. トランスポートタイプを`SSE`に設定します。
+4. 実行中のFunctionアプリのSSEエンドポイントのURLを設定し、**Connect**をクリックします：
 
     ```text
     http://0.0.0.0:8080/sse
     ```
 
-1. Click **List Tools**.
-1. Click on a tool and **Run Tool** with appropriate values.
+5. **List Tools**をクリックします。
+6. ツールをクリックして、適切な値で**Run Tool**を実行します。
 
-#### MCP Inspector + Remote MCP server (SSE)
+#### MCP Inspector + リモートMCPサーバー（SSE）
 
-1. Run MCP Inspector.
+1. MCP Inspectorを実行します。
 
     ```bash
     npx @modelcontextprotocol/inspector node build/index.js
     ```
 
-1. Open a web browser and navigate to the MCP Inspector web app from the URL displayed by the app (e.g. http://0.0.0.0:6274)
-1. Set the transport type to `SSE` 
-1. Set the URL to your running Function app's SSE endpoint and **Connect**:
+2. Webブラウザを開いて、アプリで表示されるURL（例：http://0.0.0.0:6274）からMCP Inspector Webアプリにアクセスします。
+3. トランスポートタイプを`SSE`に設定します。
+4. 実行中のFunctionアプリのSSEエンドポイントのURLを設定し、**Connect**をクリックします：
 
     ```text
     https://<acaapp-server-fqdn>/sse
     ```
 
-1. Click **List Tools**.
-1. Click on a tool and **Run Tool** with appropriate values.
+5. **List Tools**をクリックします。
+6. ツールをクリックして、適切な値で**Run Tool**を実行します。
