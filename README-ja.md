@@ -22,7 +22,6 @@ MCP を使用すると、以下が可能になります：
 |-------------|-------------|
 | [Markdown to HTML](./markdown-to-html/) | マークダウンテキストを HTML に変換するリモート MCP サーバー。 |
 | [To-do List](./todo-list/) | To-do リストアイテムを管理するリモート MCP サーバー。 |
-| [YouTube Subtitles Extractor](./youtube-subtitles-extractor/) | 指定された YouTube 動画の URL から字幕を抽出するリモート MCP サーバー。 |
 
 ## 🛠️ 始め方
 
